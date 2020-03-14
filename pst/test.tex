@@ -1,0 +1,27 @@
+
+\documentclass[10pt]{article}
+
+\usepackage{amsmath}
+\usepackage{pstricks,pst-eps}
+
+\pagestyle{empty}
+
+\begin{document}
+
+	\begin{TeXtoEPS}
+	
+		\begin{pspicture}(5.5,5.5)
+		
+		% Triangle in red:
+		\pspolygon[linecolor=red](1,1)(5,1)(1,4)
+		% Bezier curve in green:
+		\pscurve[linecolor=green,linewidth=2pt,%
+		showpoints=true](5,5)(3,2)(4,4)(2,3)
+		% Circle in blue with radius 1:
+		\pscircle[linecolor=blue,linestyle=dashed](3,2.5){1}
+		
+		\end{pspicture}
+	
+	\end{TeXtoEPS}
+
+\end{document}

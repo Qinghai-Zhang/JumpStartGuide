@@ -1,0 +1,262 @@
+
+\subsection{传统的调试技巧}
+
+在你还没有接触过 gdb 之前，程序遇见了问题你会怎么办?
+传统的调试技巧只是向程序中添加跟踪代码以在程序执行时输出变量的值，
+例如使用 printf() 或 cout 语句输出变量的值。
+你可能会问：＂这样操作够吗？为什么还要使用 GDB 这样的调试工具？＂
+
+首先，这种方法要求有效率的持续添加跟踪代码，重新编译程序，
+运行程序并分析跟踪代码的输出，在修正错误之后删除跟踪代码，
+并且针对发现的每个新的程序错误重复上述这些步骤。
+这种工作过程非常耗时，并且容易令人疲劳。
+最为重要的是，这些操作将你的注意力从实际任务转移开，
+并且降低了集中精力查找程序错误所需的推理能力。
+在这种情况下，Linux 为我们程序调试提供了一种神器，即 GDB 调试。
+使用 GDB，我们可以随时查看变量的值，随时停住我们的程序，
+而这些只需要一些简单的命令即可实现。
+
+\subsection{gdb中的基本命令}
+大多数 Linux 系统应该预先安装了 GDB。
+如果没有预先安装该工具，则必须下载 GCC　编译器程序包，
+其安装命令为
+\begin{verbatim}
+sudo apt-get install gcc gdb。
+\end{verbatim}
+
+启动 gdb 的命令是
+\begin{verbatim}
+gdb yourpram，
+\end{verbatim}
+这里 yourpram 是你的可执行程序文件(文件是经过编译之后形成的可执行文件)，
+在编译时，应该加上 -g 选项
+(这里是为了增加调试信息，如创建符号表，关闭所有的优化机制等等)，
+比如
+\begin{verbatim}
+gcc -o test_gdb test_dgb.c -g。
+\end{verbatim} 
+
+下面我们列举一些在 GDB 中一些常规的基本操作，
+\begin{itemize}
+	\item 在 GDB 中启动程序：
+	\begin{itemize}
+		\item run/r (GDB允许在不产生歧义的情况下使用缩写) 启动，程序会自动运行到下一个断点；
+		\item start 启动，程序会停留在 main 函数处，方便后续分步调试；
+	\end{itemize}
+	\item 执行下一条语句：
+	\begin{itemize}
+		\item next/n，如果该语句为函数调用，不会进入函数内部执行(即不会一步步地调试函数内部语句)；
+		\item step/s，如果该语句为函数调用,则进入函数执行其中的第一条语句；
+	\end{itemize}
+	\item 在 GDB 中设置启动参数：set args 参数1 参数2；也可以使用 run + 参数1 参数2；
+	\item list/l，默认显示 10 行源代码(带有主函数的源文件)，回车可继续显示 10 行；
+		如果想要查看某个文件的源代码，使用 list + 文件名:行号；
+	\item 在 GDB 中设置断点(程序运行的时候会停留在断点处)：
+	\begin{itemize}
+		\item break/b + 行号，指定行数处设置断点(默认为主文件所在行数)；
+		\item break/b + 函数，指定函数处设置断点；
+		\item break/b + 文件名:行号，指定某个文件的某行处设置断点；
+		\item break/b + 行号 + if ...，设置条件断点；
+	\end{itemize}
+	\item 查看断点信息：info break/b；
+		删除断点：del/d + 断点编号(删除断点前需要先查看断点编号信息)；
+	\item continue/c，继续执行程序直到下一个断点或者程序结束；
+	\item 使用 print/p 打印变量的值，ptype 打印变量的类型；
+	\item set varname = v，在程序运行的时候设置变量的值；
+	\item 使用 display/disp + varname 用来跟踪某个变量，查看变量什么时候变化，
+		程序每次停下来的时候都会显示它的值。同样可以使用 undisplay + 跟踪变量编号 放弃跟踪；
+	\item 使用命令 quit 退出 GDB。
+\end{itemize}
+
+下面是一个调试段错误的详细示例。利用你学习的知识，找出其中的问题
+\begin{verbatim}
+//
+// insertion sort, several errors
+//
+// usage:  insert_sort num1 num2 num3 ..., where the numi are the numbers to
+// be sorted
+
+int x[10],  // input array
+    y[10],  // workspace array  
+    num_inputs,  // length of input array
+    num_y = 0;  // current number of elements in y
+
+void get_args(int ac, char **av)
+{  int i;
+
+   num_inputs = ac - 1;
+   for (i = 0; i < num_inputs; i++)
+   x[i] = atoi(av[i+1]);
+}
+
+void scoot_over(int jj)
+{  int k;
+
+   for (k = num_y-1; k > jj; k++)
+     y[k] = y[k-1];
+}
+
+void insert(int new_y)
+{  int j;
+
+   if (num_y = 0)  { // y empty so far, easy case
+     y[0] = new_y;
+     return;
+   }
+   // need to insert just before the first y 
+   // element that new_y is less than
+   for (j = 0; j < num_y; j++)  {
+     if (new_y < y[j])  {
+       // shift y[j], y[j+1],... rightward 
+       // before inserting new_y
+       scoot_over(j);
+       y[j] = new_y;
+       return;
+     }
+   }
+}
+
+void process_data()
+{
+   for (num_y = 0; num_y < num_inputs; num_y++)
+     // insert new y in the proper place 
+     // among y[0],...,y[num_y-1]
+     insert(x[num_y]);
+}
+
+void print_results()
+{  int i;
+
+   for (i = 0; i < num_inputs; i++)
+     printf("%d\n",y[i]);
+}
+
+int main(int argc, char ** argv)
+{  get_args(argc,argv);
+   process_data();
+   print_results();
+}
+\end{verbatim}
+
+
+
+
+\subsection{gdb追踪核心文件}
+
+相信大部分人在编程的时候都会遇见过下面这种情形：
+\begin{verbatim}
+段错误 (核心已转储)。
+\end{verbatim}
+
+导致程序爆炸或者崩溃，这些程序错误通常与指针的误操作有关。
+迄今最常见的导致程序崩溃原因是试图在未经允许的情况下访问一个内存单元。
+在这里我们不去过多的解释内存访问错误是如何发生的，
+而把重点放在如何处理这种问题上面。
+
+核心文件(core文件)可以理解为程序崩溃时的"案发现场"，
+正确的使用core文件，调试器可以判断出程序错误所在的大概位置。
+其使用步骤一般如下
+\begin{itemize}
+	\item 创建核心文件：
+		\begin{verbatim}
+		ulimit -c unlimited。
+		\end{verbatim}
+	\item 查看 core 文件：
+		\begin{verbatim}
+		gdb 可执行文件 core文件名。
+		\end{verbatim}
+\end{itemize}
+
+\begin{remark}
+	默认情况下，核心文件的命名约定比较简单，它们都称为 core。
+	当有多个可执行程序时，它们产生的 core 文件名称一样，
+	因此需要我们对核心文件的文件名进行设置。
+	只需要在命令行输入
+	\begin{verbatim}
+	sudo su
+	echo "core-%e-%t" > /proc/sys/kernel/core_pattern
+	\end{verbatim}
+	即可。
+\end{remark}
+
+下面是一个调试段错误的详细示例。利用你学习的知识，找出其中的问题
+\begin{verbatim}
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct {
+  char *str;
+  int  len;
+} CString;
+
+
+
+CString *Init_CString(char *str)
+{
+  CString *p = malloc(sizeof(CString));
+  p->len = strlen(str);
+  strncpy(p->str, str, strlen(str) + 1);
+  return p;
+}
+
+
+void Delete_CString(CString *p)
+{
+  free(p);
+  free(p->str);
+}
+
+
+// Removes the last character of a CString and returns it.
+//
+char Chomp(CString *cstring)
+{
+  char lastchar = *( cstring->str + cstring->len);
+  // Shorten the string by one
+  *( cstring->str + cstring->len) = '0';
+  cstring->len = strlen( cstring->str );
+
+  return lastchar;
+}
+
+
+// Appends a char * to a CString
+//
+CString *Append_Chars_To_CString(CString *p, char *str)
+{
+  char *newstr = malloc(p->len + 1);
+  p->len = p->len + strlen(str);
+
+  // Create the new string to replace p->str
+  snprintf(newstr, p->len, "%s%s", p->str, str);
+  // Free old string and make CString point to the new string
+  free(p->str);
+  p->str = newstr;
+
+  return p;
+}
+
+
+int main(void)
+{
+  CString *mystr;
+  char c;
+
+  mystr = Init_CString("Hello!");
+  printf("Init:\n  str: `%s' len: %d\n", mystr->str, mystr->len);
+  c = Chomp(mystr);
+  printf("Chomp '%c':\n  str:`%s' len: %d\n", c, mystr->str, mystr->len);
+  mystr = Append_Chars_To_CString(mystr, " world!");
+  printf("Append:\n  str: `%s' len: %d\n", mystr->str, mystr->len);
+
+  Delete_CString(mystr);
+
+  return 0;
+}
+\end{verbatim}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../Guide"
+%%% End:

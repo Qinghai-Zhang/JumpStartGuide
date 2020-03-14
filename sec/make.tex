@@ -1,0 +1,296 @@
+
+什么是 makefile？
+或许很多 Winodws 的程序员都不知道这个东西，
+因为那些 Windows 的 IDE 都为你做了这个工作，
+但作为一个好的专业的程序员，makefile 还是要懂。
+特别在 Linux 下的软件编译，你就不能不自己写 makefile 了，
+会不会写 makefile，从一个侧面说明了一个人是否具备完成大型工程的能力。
+因为，makefile 关系到了整个工程的编译规则。
+一个工程中的源文件不计数，其按类型、功能、模块分别放在若干个目录中，
+makefile 定义了一系列的规则来指定，
+哪些文件需要先编译，哪些文件需要后编译，哪些文件需要重新编译，
+甚至于进行更复杂的功能操作，
+因为 makefile 就像一个 Shell 脚本一样，其中也可以执行操作系统的命令。
+makefile 带来的好处就是——自动化编译，
+一旦写好，只需要一个 make 命令，
+整个工程完全自动编译，极大的提高了软件开发的效率。
+
+
+\subsection{程序的编译和链接}
+
+在进入 makefile 之前，
+我们不得不先说一下程序编译的一些规范和方法，
+一般来说，对于C、C++文件来说，
+首先要把源文件(.c/.cpp文件)编译成中间代码文件，
+在 Windows 下也就是 .obj 文件，
+Ubuntu 下是 .o 文件，即 Object File，这个动作叫做编译。
+然后再把大量的 Object File 合成执行文件，这个动作叫作链接。   
+
+编译时，编译器需要检查的是语法，函数与变量的声明是否正确。
+对于后者，通常是你需要告诉编译器头文件的所在位置
+(头文件中应该只是声明，而定义应该放在C/C++文件中)，
+只要所有的语法正确，编译器就可以编译出中间目标文件。
+一般来说，每个源文件都应该对应于一个中间目标文件。 
+链接时，主要是链接函数和全局变量，
+所以，我们可以使用这些中间目标文件来链接我们的应用程序。
+链接器并不管函数所在的源文件，只管函数的中间目标文件。
+
+由源文件生成可执行程序的基本命令为
+\begin{verbatim}
+g++ hello.cpp hello1.cpp hello2.cpp -o hello
+\end{verbatim}
+这里 g++ 是将 gcc 默认语言设为 C++ 的一个特殊的版本
+(编译 .c 文件时为 gcc)，
+链接时它自动使用 C++ 标准库而不用 C 标准库。
+-o 指定生成的可执行文件的名称。
+然后在命令行中输入程序名可使之运行：
+\begin{verbatim}
+./hello。
+\end{verbatim}
+
+可以使用选项 -c 用来告诉编译器编译源代码但不要执行链接，
+输出结果为 .o 文件。
+文件默认名与源码文件名相同，只是将其后缀变为 .o。
+例如，下面的命令将编译源码文件 hello.cpp 并生成对象文件 hello.o
+\begin{verbatim}
+g++ -c hellospeak.cpp。
+\end{verbatim}
+
+\subsection{Makefile的核心规则}
+
+在正式写一个完整的makefile之前，
+我们先来粗略地看一看makefile的规则，
+即makefile三要素：
+\begin{verbatim}
+target : prerequisites
+         command
+\end{verbatim}
+
+其中 target 可以是一个 object file(目标文件)，
+也可以是一个执行文件，还可以是一个标签。
+\\prerequisites 就是，要生成 target 目标所需要的文件。
+command 也就是 make 需要执行的命令。
+需要注意的是这里的 command 前是一个 tab 键(不能使用空格)。
+这是一个文件的依赖关系，
+也就是说，target 这一个或多个的目标文件依赖于 prerequisites 中的文件，
+其生成规则定义在 command 中。
+说白一点就是说，rerequisites 中如果有一个以上的文件比 target 文件要新的话，
+command 所定义的命令就会被执行。
+这就是 makefile 的规则，也就是 makefile 中最核心的内容。
+
+那么 makefile 是如何工作的呢？
+在默认的方式下，也就是我们只输入 make 命令。
+那么，
+\begin{itemize}
+	\item make 会在当前目录下找名字叫 Makefile 或 makefile 的文件
+		(文件命名非常严格，只建议这两种命名方式)。
+	\item 如果找到，它会找文件中的第一个目标文件 target），
+		并把这个文件作为最终的目标文件。
+	\item 如果目标文件不存在(尚未生成)，
+		或是目标文件所依赖的后面的文件的文件修改时间要比目标文件新，
+		那么，他就会执行后面所定义的命令来生成目标文件。
+	\item 如果目标所依赖的文件也不存在，
+		那么 make 会在当前文件中找目标文件所依赖的文件的依赖性，
+		按照上述规则执行。
+	\item 最终 make 会一层又一层地去找文件的依赖关系，
+		直到编译出第一个目标文件。
+\end{itemize}
+
+
+
+\subsection{一步步写好 makefile 文件}
+
+我们先来看一个非常简单的例子，假设我们有 4 个文件，
+它们分别是 main.cpp，add.cpp，\\ mul.cpp， sub.cpp；
+其中 main.cpp 依赖于 add.cpp， mul.cpp， sub.cpp，
+为了简单起见，假设 add.cpp，mul.cpp，sub.cpp 之间没有依赖关系。
+
+一个最简单的 makefile 文件就是我们在命令行编译的时候输入的编译代码，
+用 makefile 的规范书写就是
+\begin{verbatim}
+test : main.cpp add.cpp mul.cpp sub.cpp
+　　　g++ -o test main.cpp add.cpp mul.cpp sub.cpp
+\end{verbatim}
+
+虽然这个 makefile 文件是可以正常运行的，但如果仅仅是这样，
+似乎没有说起来那么神奇。
+试想如果我们仅仅修改了 sub.cpp 文件，那么按照 makefile 的规则，
+修改后的 sub.cpp 要比 test 新，程序又再次执行了
+\begin{verbatim}
+g++ -o test main.cpp add.cpp mul.cpp sub.cpp，
+\end{verbatim}
+这导致了其他不相关的文件 add.cpp，mul.cpp 又要重新编译，
+这无疑浪费了很多资源。
+基于此，我们可以考虑将编译链接过程分解出来，
+即显示的让编译器先生成中间目标文件(.o文件)，
+修改后的 makefile 文件如下
+\begin{verbatim}
+test : main.o add.o sub.o mul.o
+   g++ -o test main.o add.o sub.o mul.o
+main.o : main.cpp
+   g++ -c main.cpp
+add.o : add.cpp
+   g++ -c add.cpp
+sub.o : sub.cpp
+   g++ -c sub.cpp
+mul.o : mul.cpp
+   g++ -c mul.cpp
+\end{verbatim}
+
+虽然这样的 makefile 基本符合我们的需求，
+但是写起来未免有些麻烦，拓展性也不是太强。
+比如对于每个源文件，我们都要重新写一次它的编译过程，
+即使它们的语法一模一样。
+为了解决这个问题，下面我们介绍一些写 makefile 文件常用的技巧
+\begin{itemize}
+	\item 利用＂\# 注释内容＂可以添加注释，以此来增加 makefile 的可读性；
+	\item 使用变量：在 makefile 中，
+		我们可以利用变量来代表某些多处使用而又可能发生变化的内容，
+		这样可以节省重复修改的工作，还可以避免遗漏。
+		使用规则为
+		\begin{verbatim}
+		变量名称　= 值列表
+		\end{verbatim}
+		需要使用的时候可以用 "\$(变量名称)" 来替换即可。
+		例如在上述 makefile 中，我们可以使用 ObjFiles 来代替所有的中间目标文件
+		\begin{verbatim}
+		#(注释) 定义和使用变量ObjFiles
+		ObjFiles = main.o add.o sub.o mul.o
+		test : $(ObjFiles)
+  			 g++ -o test $(ObjFiles)
+		...
+		\end{verbatim}
+	\item 使用函数，在这里我们仅仅介绍两个常用的函数
+    \begin{itemize}
+    	\item wildcard ：扩展通配符；
+    		通常用法是使用＂\$(wildcard *.cpp)＂来获取工作目录下的所有的 .cpp 文件列表。
+    	\item patsubst ：替换通配符；
+    		通常用法是使用＂\$(patsubst\%.cpp,\%.o,\$(wildcard *.cpp))＂
+    		得到在当前目录下可生成的 .o 文件列表。
+    		原理为先使用 wildcard 函数获取工作目录下的 .cpp 文件列表，
+    		之后将列表中所有文件名的后缀 .cpp 替换为 .o。
+    \end{itemize}
+    使用函数后的 makefile 文件
+	\begin{verbatim}
+	# get all .cpp files
+	SrcFiles = $(wildcard *.cpp)
+	# get all .o files
+	ObjFiles = $(patsubst %.cpp,%.o,$(wildcard *.cpp))
+	test : $(ObjFiles)
+   		g++ -o test $(ObjFiles)
+	... 
+	\end{verbatim}
+	
+	\item makefile 的模式匹配规则：
+		目标名中需要包含有模式字符 \%（一个），
+		包含有模式字符 \% 的目标被用来匹配一个文件名， 
+		\% 可以匹配任何非空字符串。
+		规则的依赖文件中同样可以使用 \%，
+		依赖文件中模式字符 \% 的取值情况由目标中的 \% 来决定。
+		最常用的用法是把所有的源文件生成中间目标文件。
+		\begin{verbatim}
+		%.o : %.cpp
+   			g++ -c $< -o $@ 
+		\end{verbatim}
+		其中规则命令行中使用了自动化变量 \$ ＜和 \$@。
+		自动化变量\$ ＜ 代表规则的依赖，\$@ 代表规则的目标。
+		此规则在执行时，命令行中的自动化变量将根据实际的目标和依赖文件取对应值。
+		这样一个基本的拓展性强的 makefile 文件初步生成了
+		\begin{verbatim}
+		# get all .c files
+		SrcFiles = $(wildcard *.cpp)
+		# get all .o files
+		ObjFiles = $(patsubst %.cpp,%.o,$(wildcard *.cpp))
+		test : $(ObjFiles)
+   			g++ -o test $(ObjFiles)
+		%.o : %.cpp
+   			g++ -c $< -o $@ 
+		\end{verbatim}
+	\item 每个 makefile 中都应该写一个清空目标文件(.o和执行文件)的规则，
+		这不仅便于重新编译，也很利于保持文件的清洁。
+		这是一个基本修养。
+		一般的风格都是：
+		\begin{verbatim}
+		clean: 
+   			rm + 需要清理的文件
+		\end{verbatim}		
+		更为稳健的做法是：
+		\begin{verbatim}
+		.PHONY : clean
+		clean :
+   			-＠rm　-f 需要清理的文件 
+		\end{verbatim}	
+		其中 .PHONY 意思表示 clean 是一个伪目标(防止产生冲突)。
+		而在 rm 命令前面加了一个小减号的意思就是，
+		也许某些文件出现问题，但不要管，继续做后面的事。
+		＠表示不在命令行显示这个命令，
+		-f表示强制执行，不管有没有这些文件。
+		值得注意的是，clean 的规则不要放在文件的开头，
+		不然，这就会变成make的默认目标，相信谁也不愿意这样。
+		不成文的规定是——clean 从来都是放在文件的最后。
+		有时也可以添加 realclean 进行更深层次的清理。
+	\item 添加伪目标 all：因为 makefile 默认第一个目标是＂终极目标＂，
+		所以我们约定的做法是使用一个称为＂all＂的伪目标来作为终极目标，
+		它的依赖文件就是那些需要创建的程序。
+		\begin{verbatim}
+			all : 其他目标
+		\end{verbatim}
+	\item 添加 run 来运行程序。
+	
+\end{itemize}
+
+我们展示一下最后的 makefile 文件
+\begin{verbatim}
+CPP = g++
+OFLAG = -o
+CFLAG = -c
+
+.PHONY: clean all
+
+all: test
+
+# get all .cpp files
+SrcFiles = $(wildcard *.cpp)
+# get all .o files
+ObjFiles = $(patsubst %.cpp,%.o,$(wildcard *.cpp))
+
+test : $(ObjFiles)
+   $(CPP) $(OFLAG) $@ $(ObjFiles)
+
+%.o : %.cpp
+   $(CPP) $(CFLAG) $< $(OFLAG) $@ 
+
+run:
+   ./test
+
+clean:
+   -@rm -f *.o
+\end{verbatim}
+这样我们只需要在终端输入 make，make run 或者 make clean 
+就可以实现程序的编译，运行以及清理工作。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../Guide"
+%%% End:

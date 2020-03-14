@@ -1,0 +1,132 @@
+\documentclass[a4paper,oneside]{report}
+%\documentclass[a4paper]{ctexart}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{CJKutf8}
+\usepackage{color}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\usepackage{latexsym}
+\usepackage{mathrsfs}
+\usepackage{subfigure}
+\usepackage{textcomp}
+\usepackage{url}
+%\usepackage{unicode-math}
+
+\usepackage{flafter}
+\usepackage{booktabs, longtable}
+\usepackage{pxfonts}
+\usepackage{cite}
+
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+\let\mathbb\relax % remove the definition by unicode-math
+\DeclareMathAlphabet{\mathbb}{U}{msb}{m}{n}
+
+\begin{document}
+%\begin{CJK*}{UTF8}{gbsn}
+\begin{CJK*}{UTF8}{gkai}
+\CJKindent
+%------------中文设置--------------------------
+\makeatletter %将文献引用作为上标出现,增加括号，
+\def\@cite#1#2{\textsuperscript{[{#1\if@tempswa , #2\fi}]}}
+\makeatother
+\newtheorem{theorem}{{定理}}
+\newtheorem{remark}{{注}}
+\newtheorem{proposition}[theorem]{{命题}}
+\newtheorem{lemma}[theorem]{{引理}}
+\newtheorem{corollary}[theorem]{{推论}}
+\newtheorem{definition}[theorem]{{定义}}
+\newtheorem{question}[theorem]{{问题}}
+
+%\renewcommand{\refname}{\centerline{参考文献}}
+\renewcommand{\bibname}{\centerline{参考文献}}
+\renewcommand{\tablename}{表}
+%\renewcommand{\captionlabeldelim}{\quad}
+%===================Image settings========================%
+\renewcommand{\figurename}{图}
+%\renewcommand{\abstractname}{摘要}
+%\renewcommand{\captionlabeldelim}{\quad} %Need caption2 macro package
+%===============End image settings========================%
+%-----------中文设置--------------------------
+
+		
+\title{科研新手快速入门指南}
+\author{朱玉可 (\texttt{yukezhu0323@126.com})\\
+  张庆海 (\texttt{qinghai@zju.edu.cn})\\
+}
+\date{浙江大学数学科学学院计算数学系}
+
+
+\maketitle
+
+%\input{sec/preface}
+
+\pagestyle{empty}
+
+\tableofcontents
+\clearpage
+
+\pagestyle{fancy}
+\fancyhead{}
+\lhead{朱玉可}
+\chead{}
+\rhead{入门指南}
+
+
+\chapter{工具篇}
+
+\section{Ubuntu 操作系统及其上软件的安装}
+\label{sec:ubuntu}
+\input{sec/ubuntuInstall.tex}
+
+\section{强大的文本编辑器---Emacs}
+\label{sec:emacs}
+\input{sec/emacs.tex}
+
+\section{一次编写，终身受益---Makefile}
+\label{sec:make}
+\input{sec/make.tex}
+
+\section{软件调试的艺术---GDB}
+\label{sec:gdb}
+\input{sec/gdb.tex}
+
+
+
+\chapter{方法篇}
+
+\section{是什么? 为什么? 怎么做(用)?}
+\label{sec:WhatWhyHow}
+\input{sec/WhatWhyHow.tex}
+
+\section{算法的契约}
+\label{sec:contract}
+\input{sec/contract.tex}
+
+\section{更好的算法设计}
+\label{sec:designAlgo}
+\input{sec/designAlgo.tex}
+
+\section{C++ 中的代码重用---继承和组合}
+\label{sec:reuse}
+\input{sec/reuse.tex}
+
+ 
+{\footnotesize
+\bibliographystyle{abbrv}
+\bibliography{bib/Guide}
+}
+
+
+
+\end{CJK*}
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
