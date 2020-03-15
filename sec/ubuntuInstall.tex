@@ -54,8 +54,21 @@ Ubuntu 作为当下非常流行的 Linux 发行版，
 		\end{itemize}
 
 	\item [II.] 安装工作
-		\begin{itemize}
-			\item [II-a.] 关闭所有程序后，插入制作好的启动盘，重新启动电脑，
+	        \begin{itemize}
+                        \item [II-a.] 安装前的准备工作：
+                                \begin{itemize}
+                                        \item 在BIOS中关闭BOOT SAFTY MODE(或类似的名称)，即所谓的安全模式。这个其实会阻止任何非Windows认证的系统启动。 
+                                        \item 检查你的机器是否存在Optane分区。Optane内存（傲腾）是Intel的一项技术，在19年以后的计算机中可能会出现。
+                                          它会对硬盘做快速缓存，一个副作用是导致你对硬盘的手工修改失效，包括ubuntu安装程序，如果有，务必在安装前关闭。
+                                          安装成功之后，可以再打开。
+ 				                  \begin{figure}[htbp]
+					                  \centering
+						          \includegraphics[width=0.75\textwidth]{png/optane}
+                                                          \caption{检查Optane。}
+                                                          \label{fig:optane}
+				                  \end{figure}
+                                \end{itemize}
+			\item [II-b.] 关闭所有程序后，插入制作好的启动盘，重新启动电脑，
 				并且在启动出现提示时按 F12(不同电脑不同)键进入 boot 选项，
 				选择对应的启动盘作为启动介质(将 USB 移动到最上面)，
 				然后按 F10 保存并退出，接着选择安装 Ubuntu。
@@ -74,7 +87,7 @@ Ubuntu 作为当下非常流行的 Linux 发行版，
 				如果没有直接进入到 boot 选项的快捷键，可先进入 bios 界面，
 				然后切换到 boot 选项进行设置，
 				不同型号不同品牌的电脑可能会稍有差异。
-			\item [II-b.] 接着选择合适的语言和键盘布局，正常安装、一路下一步后直到安装类型界面，
+			\item [II-c.] 接着选择合适的语言和键盘布局，正常安装、一路下一步后直到安装类型界面，
 				此时选择其他选项进入系统分区，选中之前压缩磁盘得到的空闲硬盘空间，
 				选择左下角的 + 号依次添加四个分区：
 				\begin{itemize}
@@ -121,11 +134,23 @@ Ubuntu 作为当下非常流行的 Linux 发行版，
 				    }
 					\label{fig:setting}
 				\end{figure}
-			\item [II-c.] 分配之后的分区表会出现 4 个未知的新分区，然后点击继续安装。
+			\item [II-d.] 分配之后的分区表会出现 4 个未知的新分区，然后点击继续安装。
 				选择时区和用户名密码，自行设置后等待安装完成。
 		\end{itemize}
+	\item [III.] 启动问题
+		\begin{itemize}
+                        \item [III-a.] 检查你的efi启动分区内容是否正确。这个需要一定专业硬件知识。建议大家下载easyuefi软件完成。运行之后，
+                          在下图中必须确保ubuntu启动项在第一位。如果不是，用绿色的上箭头修改启动顺序。注意对存在Optane的机器，当你每次重新激活Optane时，
+                          都会将Windows Boot Manager移动到第一位，必须在激活重启之后重新调整efi。  
+				\begin{figure}[htbp]
+					\centering
+			　		\includegraphics[width=0.75\textwidth]{png/easyuefi}
+			　		\caption{检查efi启动项。}
+			　		\label{fig:uefi}
+				\end{figure}
+                        \item [III-b.] 其他问题。双系统无法启动的原因可能很多，无法在此一一列举。主要问题都和efi内容有关。比如请仔细检查II-a项中的准备工作是否已经做了。
+                \end{itemize}
 \end{itemize}
-
 
 
 \subsection{Ubuntu 上的软件安装}
