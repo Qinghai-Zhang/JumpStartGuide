@@ -12,20 +12,20 @@ Ubuntu 作为当下非常流行的 Linux 发行版，
 这里我们主要介绍一下双系统 (Win10 + Ubuntu) 的安装。
 
 \begin{itemize}
-	\item [I.] 准备工作
-		\begin{itemize}
-			\item [I-a.] 磁盘分区：
+	\item 准备工作
+		\begin{enumerate}
+			\item 磁盘分区：
 			    首先查看本机的磁盘情况(win+x $\to$ Disk Management)。
 				在足够大的硬盘上选择合适的大小进行压缩(右键$\to$Shink Volume)，
 				压缩卷的大小即为即将安装的Ubuntu系统的大小，推荐为60GB以上(建议120GB)。
-				压缩后磁盘出现空白卷，如图 (\ref{fig:shrinkVol})
+				压缩后磁盘出现空白卷，如图 (\ref{fig:shrinkVol})。
 				\begin{figure}[htbp]
 					\centering
 					\includegraphics[width=0.7\textwidth]{png/shrinkVol}
 					\caption{压缩后的磁盘出现空白卷(Unallocated)。}
 					\label{fig:shrinkVol}
 				\end{figure}
-			\item [I-b.] 下载系统镜像：从 Ubuntu 官网下载最新安装镜像，
+			\item 下载系统镜像：从 Ubuntu 官网下载最新安装镜像（见图\ref{fig:ubuntuDown}），
 				下载地址为
 				\begin{verbatim}
 				https://ubuntu.com/download/desktop.
@@ -36,7 +36,7 @@ Ubuntu 作为当下非常流行的 Linux 发行版，
 					\caption{Ubuntu 操作系统下载网址。}
 					\label{fig:ubuntuDown}
 				\end{figure}
-			\item [I-c.] 制作启动盘：当系统镜像下载好之后，需要一个新的4G以上的u盘。
+			\item 制作启动盘：当系统镜像下载好之后，需要一个新的4G以上的u盘。
 				接着下载启动盘制作工具 UltraISO ( \url{https://cn.ultraiso.net/xiazai.html})。
 				该软件为免费试用版，下载好之后安装即可(最后一步点击继续试用)。
 				接着在 UltraISO 中制作启动盘：
@@ -44,21 +44,21 @@ Ubuntu 作为当下非常流行的 Linux 发行版，
 					\item 打开之前下载的 Ubuntu 镜像文件(文件$\to$打开)；
 					\item 选择写入硬盘镜像(启动$\to$写入硬盘镜像)。
 				\end{itemize}
-				注意写入过程中会格式化u盘。
+				注意写入过程中会格式化u盘。见图\ref{fig:UltraISO}。
 			　	\begin{figure}[htbp]
 			　		\centering
 			　		\includegraphics[width=0.75\textwidth]{png/UltraISO}
 			　		\caption{制作完成后的启动盘。}
 			　		\label{fig:UltraISO}
 			　	\end{figure}
-		\end{itemize}
+		\end{enumerate}
 
-	\item [II.] 安装工作
-	        \begin{itemize}
-                        \item [II-a.] 安装前的准备工作：
+	\item 安装工作
+	        \begin{enumerate}
+                        \item 安装前的准备工作：
                                 \begin{itemize}
                                         \item 在BIOS中关闭BOOT SAFTY MODE(或类似的名称)，即所谓的安全模式。这个其实会阻止任何非Windows认证的系统启动。 
-                                        \item 检查你的机器是否存在Optane分区。Optane内存（傲腾）是Intel的一项技术，在19年以后的计算机中可能会出现。
+                                        \item 检查你的机器是否存在Optane分区（见图\ref{fig:optane}）。Optane内存（傲腾）是Intel的一项技术，在19年以后的计算机中可能会出现。
                                           它会对硬盘做快速缓存，一个副作用是导致你对硬盘的手工修改失效，包括ubuntu安装程序，如果有，务必在安装前关闭。
                                           安装成功之后，可以再打开。
  				                  \begin{figure}[htbp]
@@ -68,10 +68,13 @@ Ubuntu 作为当下非常流行的 Linux 发行版，
                                                           \label{fig:optane}
 				                  \end{figure}
                                 \end{itemize}
-			\item [II-b.] 关闭所有程序后，插入制作好的启动盘，重新启动电脑，
+			\item 关闭所有程序后，插入制作好的启动盘，重新启动电脑，
 				并且在启动出现提示时按 F12(不同电脑不同)键进入 boot 选项，
 				选择对应的启动盘作为启动介质(将 USB 移动到最上面)，
-				然后按 F10 保存并退出，接着选择安装 Ubuntu。
+				然后按 F10 保存并退出，接着选择安装 Ubuntu。参见图\ref{fig:UbuntuInstall}。
+				如果没有直接进入到 boot 选项的快捷键，可先进入 bios 界面，
+				然后切换到 boot 选项进行设置，
+				不同型号不同品牌的电脑可能会稍有差异。
 				\begin{figure}[htbp]
 					\centering
 					\subfigure[将启动盘作为首选启动项]{
@@ -81,15 +84,12 @@ Ubuntu 作为当下非常流行的 Linux 发行版，
 					\subfigure[选择安装Ubuntu]{
 						\includegraphics[width=0.42\linewidth]{png/InstallUbuntu}
 					}
+                                        \caption{通过U盘启动安装Ubuntu。}
 					\label{fig:UbuntuInstall}
 				\end{figure}
-			
-				如果没有直接进入到 boot 选项的快捷键，可先进入 bios 界面，
-				然后切换到 boot 选项进行设置，
-				不同型号不同品牌的电脑可能会稍有差异。
-			\item [II-c.] 接着选择合适的语言和键盘布局，正常安装、一路下一步后直到安装类型界面，
+			\item 接着选择合适的语言和键盘布局（见图\ref{fig:installType}），正常安装、一路下一步后直到安装类型界面，
 				此时选择其他选项进入系统分区，选中之前压缩磁盘得到的空闲硬盘空间，
-				选择左下角的 + 号依次添加四个分区：
+				选择左下角的 + 号依次添加四个分区（见图\ref{fig:setting}）：
 				\begin{itemize}
 					\item 系统分区，即存放Ubuntu系统的分区
 					(大小20GB，主分区，空间起始位置，Ext4文件系统，挂载点/)；
@@ -109,6 +109,7 @@ Ubuntu 作为当下非常流行的 Linux 发行版，
 					\subfigure[安装类型]{
 						\includegraphics[width=0.42\linewidth]{png/InstallType}
 					}
+                                        \caption{语言和安装类型。}
 					\label{fig:installType}
 　　				\end{figure}
 				\begin{figure}[htbp]
@@ -132,24 +133,25 @@ Ubuntu 作为当下非常流行的 Linux 发行版，
 				    \subfigure[分区完成]{
 				    	\includegraphics[width=0.8\linewidth]{png/allocated}
 				    }
-					\label{fig:setting}
+                                    \caption{分区设置。}
+				    \label{fig:setting}
 				\end{figure}
-			\item [II-d.] 分配之后的分区表会出现 4 个未知的新分区，然后点击继续安装。
+			\item 分配之后的分区表会出现 4 个未知的新分区，然后点击继续安装。
 				选择时区和用户名密码，自行设置后等待安装完成。
-		\end{itemize}
-	\item [III.] 启动问题
-		\begin{itemize}
-                        \item [III-a.] 检查你的efi启动分区内容是否正确。这个需要一定专业硬件知识。建议大家下载easyuefi软件完成。运行之后，
+		\end{enumerate}
+	\item 启动问题
+		\begin{enumerate}
+                        \item 检查你的efi启动分区内容是否正确。这个需要一定专业硬件知识。建议大家下载easyuefi软件完成。运行之后，
                           在下图中必须确保ubuntu启动项在第一位。如果不是，用绿色的上箭头修改启动顺序。注意对存在Optane的机器，当你每次重新激活Optane时，
-                          都会将Windows Boot Manager移动到第一位，必须在激活重启之后重新调整efi。  
+                          都会将Windows Boot Manager移动到第一位，必须在激活重启之后重新调整efi。见图\ref{fig:uefi}。  
 				\begin{figure}[htbp]
 					\centering
 			　		\includegraphics[width=0.75\textwidth]{png/easyuefi}
 			　		\caption{检查efi启动项。}
 			　		\label{fig:uefi}
 				\end{figure}
-                        \item [III-b.] 其他问题。双系统无法启动的原因可能很多，无法在此一一列举。主要问题都和efi内容有关。比如请仔细检查II-a项中的准备工作是否已经做了。
-                \end{itemize}
+                        \item 其他问题。双系统无法启动的原因可能很多，无法在此一一列举。主要问题都和efi内容有关。比如请仔细检查II-a项中的准备工作是否已经做了。
+                \end{enumerate}
 \end{itemize}
 
 
@@ -210,7 +212,7 @@ sudo make install。
 Ubuntu 软件中心是最容易使用的，它能让你安装和卸载许多流行软件包。
 你可以简单地搜索如 'emacs' 这种关键字来搜索您想安装的软件包，或浏览给出的分类，
 选择应用程序，将进入应用程序介绍页面，此页面将给出应用程序截图和简要介绍，
-点击下方的“安装”按钮，获得授权后即开始安装软件。
+点击下方的“安装”按钮，获得授权后即开始安装软件。见图\ref{fig:Software}。
 \begin{figure}[htbp]
 	\centering
 	\subfigure[Ubuntu 软件中心界面]{
@@ -220,6 +222,7 @@ Ubuntu 软件中心是最容易使用的，它能让你安装和卸载许多流�
 	\subfigure[使用 Ubuntu 软件中心安装软件]{
 		\includegraphics[width=0.45\linewidth]{png/emacsInstall}
 	}
+        \caption{软件中心。}
 	\label{fig:Software}
 \end{figure}
 
@@ -231,7 +234,7 @@ Ubuntu 软件中心是最容易使用的，它能让你安装和卸载许多流�
 sudo apt-get install synaptic。
 \end{verbatim}
 
-在新立得软件包管理器对话框中，你可以选择你需要的软件包。
+在新立得软件包管理器对话框中（见图\ref{fig:Synaptic}），你可以选择你需要的软件包。
 左侧面板列出的是分类，右侧面板列出的是软件包。
 点击搜索，将弹出查找对话框。在搜索字段中输入软件包的名称并点击搜索。
 然后选择查找到的软件包，标记以便安装复选框来安装软件包。
@@ -247,6 +250,7 @@ sudo apt-get install synaptic。
 	\subfigure[使用新立得软件包管理器安装软件]{
 		\includegraphics[width=0.45\linewidth]{png/synapticInstall}
 	}
+        \caption{新立得软件包管理器。}
 	\label{fig:Synaptic}
 \end{figure}
 
@@ -258,9 +262,3 @@ sudo apt-get install synaptic。
 
 
 
-
-
-%%% Local Variables:
-%%% mode: latex
-%%% TeX-master: "../Guide"
-%%% End:
