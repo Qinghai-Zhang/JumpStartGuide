@@ -177,7 +177,7 @@ sudo apt-get install package  // package 为需要安装的软件。
 而 apt 是从网络服务器下载并安装软件包的，它会解决依赖关系。
 其基本的安装命令为
 \begin{verbatim}
-dpkg -i package.deb。
+sudo dpkg -i package.deb。
 \end{verbatim}
 由于 dpkg 的安装方式不会解决依赖的问题，所以经常会出现安装过程中依赖未安装的情况，
 可以通过
