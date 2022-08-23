@@ -217,8 +217,12 @@ Beamer 的帧分为两类，即
 	\end{verbatim}	
 	其中选项可以是一个，也可以有多个，多个选项之间用逗号分隔。
 	选项中一般设置绘制对象时的线条、颜色属性，这些属性又被称为图形参数。
+        使用TeXtoEPS环境可以导出eps格式的矢量图，这种类型的图片不论放大多少倍
+        都很清晰并且能够被文字紧密环绕，不会留下大片的空白。
 	详细命令可以参考书籍
 	PSTricks : PostScript macros for Generic TeX \cite{van1993pstricks}。
+
+       
 	\item Makefile 文件(负责由源代码生成 eps 格式图片)：
 	\begin{verbatim}
 	allEps : test.eps
