@@ -1,0 +1,122 @@
+
+\subsection{为什么要写英文讲义}
+
+荀子说过 “不积跬步，无以至千里；不积小流，无以成江海”，
+数学学科的学习也是如此，
+数学水平的提升需要长时间的学习与积累，
+为了更好地在积累过程中形成自己的“数学知识体系”，
+要重点把握以下几个原则。
+
+首先数学的学习需要“少、慢、精、深”，
+我们可以每次少学一点，但是一定要确保自己真正理解和掌握了新的知识，
+并且将新学的知识与已有的知识联系起来，使得整个体系更加牢固。
+就拿盖房子打比方，想要建成属于自己数学知识体系的 “大厦” ，
+那就得从底层开始把每一层楼都建得结结实实，让后面楼层的建设能够依赖于前面坚实的基础而越发轻松，
+而不是在平地上建一个一个独立的帐篷，这种方式只能建起零碎的小房子，而无法建起 “高楼”。
+
+其次，每过一段时间要对自己的当前的知识体系重新进行一次梳理，
+因为每当我们学习了新的知识，我们对旧的知识会有新的理解。
+重新梳理的根本目的是让我们的知识体系混乱度最小，
+试想如果数学各个学科的知识在我们脑中乱成一锅粥，
+这种情况下要我们想起某个知识点就非常困难了，
+更别说在实际问题中应用数学了，
+所以这种梳理也是回顾和修复知识体系漏洞的好方法。
+
+最后，就是要善于在实践中学习和整理数学。
+本科生阶段是通过一门一门的数学课程来学习数学，
+而在研究生阶段，数学课程教的那些知识已经完全不够用了，
+此时就需要在科研实践中学习和整理数学，
+将科研成果、论文中的数学知识整合进数学知识体系中。
+
+道家讲求“道法术”的统一，
+撰写自己的英文讲义便是整理数学知识体系之“法”，
+通过撰写英文讲义很容易贯彻上面所说的三个原则。
+首先，写英文讲义有利于我们主动思考，
+有些时候在写讲义的过程中，能够发现许多之前没有注意到的细节，
+产生对数学理论更深的理解，
+符合“少、慢、精、深”的原则；
+其次，英文讲义可视化了自身的知识体系状态，
+当遇到问题时，有什么漏洞一目了然，
+也便于后期回顾和总结，
+符合“定期梳理”的原则；
+最后，当在实践过程中学习到新的数学知识，便可以第一时间整理至讲义中，
+符合“在实践中学习和整理数学”的原则。
+而英文作为当前数学界的通用语言，撰写英文讲义也是为了提升英文表达能力，
+为后续撰写英文论文打下坚实的基础。
+
+\subsection{写好一个合格的英文数学讲义}
+
+% 除了遵循前文中数学学习原则的指导外，
+平时我们写英文讲义时，也要在细节上严格要求自己，
+让讲义能够达到一定的标准，
+成为一份“合格”的英文讲义，这里枚举了一些基本的标准：
+
+\begin{itemize}
+  \item 保证英文的拼写、语法、用语正确性和恰当性：英文拼写、语句语法的正确性自然是最基本的要求，而用语也要选择数学文章中常用的表达，例如下面两个语句都没有语法错误，但是后者更加符合数学文章的表达习惯。这就需要多阅读文章进行积累，或者在写讲义时多参考别人写的文章。
+  \begin{lstlisting}
+  M(z) can be decomposed into ...
+  M(z) can be considered as the composition of ...
+  \end{lstlisting}
+  \item 标题格式要统一：文档名、章节标题所有实词首字母大写，例如 \lstinline|Notes on Complex Analysis|；
+  二级标题、三级标题的首字母大写，例如 \lstinline|A story of motivations|。
+  \item 章节内容的组织要符合数学脉络和读者思路：
+    \begin{itemize}
+      \item 每章、每节的标题名要准确概括章节的核心思想，尽量用具体的词语而非宽泛的词语：例如想阐述 Mobius 变换保持角的性质时，使用 \lstinline|Preservation of angles| 比 \lstinline|The basic properties| 更为精确。
+      \item 讲义内容要完善、有条理：讲义的内容要完善、自成体系，切忌前言不搭后语，以及跳跃性太大，尽量将相似的内容放在一起，便于读者理解。
+      例如在引入 Mobius 变换定义时，可以同时引入 singular Mobius 变换、 normalized Mobius 变换的概念，而非一节引入一个概念，这样有利于读者理清多个概念之间的关系。
+    \end{itemize}
+  \item 定义环境中的“定义主体”要用斜体表示：例如 \lstinline|function| 定义需要使用 \lstinline|\emph{function}|。
+  \begin{definition}
+    \label{def:function}
+    \textnormal{A \emph{function} is a mapping from a set $X$ to a set $Y$.}
+  \end{definition}
+
+  % \item 定义、定理、引理、推论环境的选择要合理：数学讲义中环境的选择体现了整个讲义的逻辑，能够帮助读者理清讲义的脉络，在选择环境时思考其与上下文的关系。
+  \item 数学公式标点格式要规范：
+    \begin{itemize}
+      \item 行间数学公式作为描述语句的一部分，则需要加逗号：例如，若数列 $a_n$ 满足
+      \begin{equation}
+        \label{eq:punctation1}
+        \forall \epsilon > 0, \exists N \in \mathbb{N} \text{ s.t. } \forall n \geq N, |a_n - A| < \epsilon,
+      \end{equation}
+        则称 $a_n$ 的极限为 $A$。这里的行间公式结尾有一个逗号，说明其是描述语句的一部分。
+      \item 多行数学公式作为结尾，则前几行加逗号，最后一行加句号：例如
+      \begin{align}
+        \label{eq:punctation2}
+        f_1(x) = 1, \\
+        f_2(x) = x.
+      \end{align}
+    \item 当数学公式作为证明环境结尾时，将证明环境结尾的方框插入公式中：例如
+    \begin{proof}
+      \begin{displaymath}
+        \begin{bmatrix}
+          \alpha & -\beta
+          \\
+          \beta & \alpha
+        \end{bmatrix}^{-1}
+        =
+        \frac{1}{\alpha^2+\beta^2}
+        \begin{bmatrix}
+          \alpha & \beta
+          \\
+          -\beta & \alpha
+        \end{bmatrix}.
+        \qedhere
+      \end{displaymath}
+    \end{proof}
+    从源代码角度即在结尾处增加 \lstinline|\qedhere|。
+
+    \begin{lstlisting}
+    \begin{proof}
+      \begin{displaymath}
+        ...
+        \qedhere
+      \end{displaymath}
+    \end{proof}
+    \end{lstlisting}
+
+  \end{itemize}
+  \item 为每个定理环境、数学公式提供标签：即在每个 \lstinline|theorem|、\lstinline|equation| 环境中加上 \lstinline|\label{...}|，这样在后续引用时就可以直接使用 \lstinline|\ref{...}|。这样体现了数学知识相互的联系与复用。
+\end{itemize}
+
+
