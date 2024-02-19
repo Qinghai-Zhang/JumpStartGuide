@@ -116,7 +116,27 @@
     \end{lstlisting}
 
   \end{itemize}
-  \item 为每个定理环境、数学公式提供标签：即在每个 \lstinline|theorem|、\lstinline|equation| 环境中加上 \lstinline|\label{...}|，这样在后续引用时就可以直接使用 \lstinline|\ref{...}|。这样体现了数学知识相互的联系与复用。
+  \item 为每个定理环境、数学公式提供标签：即在每个 \lstinline|theorem|、\lstinline|equation| 
+  环境中加上 \lstinline|\label{...}|，
+  这样在后续引用时就可以直接使用 \lstinline|\ref{...}|。这样体现了数学知识相互的联系与复用。
+  \item 如果有需要在数学文档中插入图片，无论是何种格式的图，
+  插入的图片大小都需要严丝合缝，\textbf{不能}出现外围的白边。
 \end{itemize}
 
+\subsection{参考文献的规范}
+我们在写英文数学讲义或是数学论文时，总是需要引用前人的成果，此时就需要我们写一份规范的\texttt{.bib}文件。
+由于参考文献格式比较重要，且\texttt{.bib}文件的格式和\texttt{.tex}略有区别，我们另起一节来介绍参考文献的格式规范。
+\begin{itemize}
+  \item \texttt{.bib}文件的编译:要正常生成参考文献，除了有\texttt{bibtex}源代码外，
+  还需要正确的编译过程。只用\texttt{xelatex}编译一遍是无法生成参考文献的。
+  正确的编译过程应当是:
+  \texttt{xelatex}--\texttt{bibtex}--\texttt{xelatex}--\texttt{xelatex}
+  \item 参考文献在\texttt{.bib}文件中的次序:依照作者首字母为第一关键字，
+  发表年份为第二关键字，按升序排列。
+  \item 对于引用的著作标题，所有的实词首字母都应当大写。
+  对于期刊论文标题，标题首字母和人名，专有名词首字母要大写，其余都小写。
+  \item 所有引用的著作，一定用@book作为标识符。
+  \item 引用著作包含的信息至少需要有title, author, year和publisher。
+  \item 引用论文包含的信息至少需要有title, author, journal, pages, year和publisher。
+\end{itemize}
 
