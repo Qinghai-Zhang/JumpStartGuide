@@ -11,7 +11,8 @@
 我们可以每次少学一点，但是一定要确保自己真正理解和掌握了新的知识，
 并且将新学的知识与已有的知识联系起来，使得整个体系更加牢固。
 就拿盖房子打比方，想要建成属于自己数学知识体系的 “大厦” ，
-那就得从底层开始把每一层楼都建得结结实实，让后面楼层的建设能够依赖于前面坚实的基础而越发轻松，
+那就得从底层开始把每一层楼都建得结结实实，
+让后面楼层的建设能够依赖于前面坚实的基础而越发轻松，
 而不是在平地上建一个一个独立的帐篷，这种方式只能建起零碎的小房子，而无法建起 “高楼”。
 
 其次，每过一段时间要对自己的当前的知识体系重新进行一次梳理，
@@ -46,86 +47,167 @@
 
 \subsection{写好一个合格的英文数学讲义}
 
-% 除了遵循前文中数学学习原则的指导外，
-平时我们写英文讲义时，也要在细节上严格要求自己，
-让讲义能够达到一定的标准，
-成为一份“合格”的英文讲义，这里枚举了一些基本的标准：
+除了遵循前文中数学学习原则的指导外，平时我们写英文讲义时，也要在细节上严格要求自己，
+让讲义能够达到一定的标准，成为一份“合格”的英文讲义。
+
+当我们需要几个人共同写一篇文章的时候，不仅仅是只对自己写的那个部分负责，
+还要对这篇文章的所有内容负责，这是协同写文章的契约精神。 
+当同伴有明显笔误或可能发现了他的错误后，需要共同探讨并及时改正。
+
+写英文数学讲义有一些基本的注意事项，列举如下。
 
 \begin{itemize}
-  \item 保证英文的拼写、语法、用语正确性和恰当性：英文拼写、语句语法的正确性自然是最基本的要求，而用语也要选择数学文章中常用的表达，例如下面两个语句都没有语法错误，但是后者更加符合数学文章的表达习惯。这就需要多阅读文章进行积累，或者在写讲义时多参考别人写的文章。
-  \begin{lstlisting}
-  M(z) can be decomposed into ...
-  M(z) can be considered as the composition of ...
-  \end{lstlisting}
-  \item 标题格式要统一：文档名、章节标题所有实词首字母大写，例如 \lstinline|Notes on Complex Analysis|；
-  二级标题、三级标题的首字母大写，例如 \lstinline|A story of motivations|。
-  \item 章节内容的组织要符合数学脉络和读者思路：
+  \item 数学逻辑
+  \begin{itemize}
+  	\item 以定义为基石。写文章时，需要以大众的视角来看要不要下这个定义，
+  	而不是站在自己的角度，认为这个是显然的就不下定义了。
+  	\item 逻辑推演要一步步来。 例如想要表达“存在A使得B，而B推出了C.”，我们可以将它们分成两句话写
+  	“There exists A such that B . Thus C.”，尽量不要揉在一句里，
+  	以免逻辑混乱“There exists A such that B, which implies C.” （which指代不明）。
+  	\item 前后符号一致原则。写文章时保证上下文符号一致，让读者得以看懂。
+  	例如数列$(a_n)$在前面是用圆括号表示的，后面写文章时就不要用大括号$\{a_n\}$来表示了。
+  	\item 定义、定理、引理、推论环境的选择要合理。
+  	数学讲义中环境的选择体现了整个讲义的逻辑，
+  	能够帮助读者理清讲义的脉络，在选择环境时思考其与上下文的关系。
+  	\item 定义环境中的“定义主体”要用斜体表示。
+  	例如 \lstinline|function| 定义需要使用 \lstinline|\emph{function}|。
+  	\begin{definition}
+  		\label{def:function}
+  		\textnormal{A \emph{function} is a mapping from a set $X$ to a set $Y$.}
+  	\end{definition}
+    \item 数学公式标点格式要规范。
     \begin{itemize}
-      \item 每章、每节的标题名要准确概括章节的核心思想，尽量用具体的词语而非宽泛的词语：例如想阐述 Mobius 变换保持角的性质时，使用 \lstinline|Preservation of angles| 比 \lstinline|The basic properties| 更为精确。
-      \item 讲义内容要完善、有条理：讲义的内容要完善、自成体系，切忌前言不搭后语，以及跳跃性太大，尽量将相似的内容放在一起，便于读者理解。
-      例如在引入 Mobius 变换定义时，可以同时引入 singular Mobius 变换、 normalized Mobius 变换的概念，而非一节引入一个概念，这样有利于读者理清多个概念之间的关系。
+  	  \item 行间数学公式作为描述语句的一部分，则需要加逗号。例如，若数列 $(a_n)$ 满足
+  	  \begin{equation}
+  		  \label{eq:punctation1}
+  		  \forall \epsilon > 0, \exists N \in \mathbb{N} \text{ s.t. } 
+  		  \forall n \geq N, |a_n - A| < \epsilon,
+  	  \end{equation}
+  	  则称 $(a_n)$ 的极限为 $A$。这里的行间公式结尾有一个逗号，说明其是描述语句的一部分。
+  	  \item 多行数学公式作为结尾，则前几行加逗号，最后一行加句号。例如
+  	  \begin{align}
+  		  \label{eq:punctation2}
+  		  f_1(x) = 1, \\
+  		  f_2(x) = x.
+  	  \end{align}
+  	  \item 当数学公式作为证明环境结尾时，将证明环境结尾的方框插入公式中。例如
+  	  \begin{proof}
+  		  \begin{displaymath}
+  			  \begin{bmatrix}
+  				  \alpha & -\beta
+  				  \\
+  				  \beta & \alpha
+  			  \end{bmatrix}^{-1}
+  			  =
+  			  \frac{1}{\alpha^2+\beta^2}
+  			  \begin{bmatrix}
+  				  \alpha & \beta
+  				  \\
+  				  -\beta & \alpha
+  			  \end{bmatrix}.
+  			  \qedhere
+  		  \end{displaymath}
+  	  \end{proof}
+  	  从源代码角度即在结尾处增加 \lstinline|\qedhere|。
+  	  \begin{lstlisting}
+	  \begin{proof}
+		  \begin{displaymath}
+			  ...
+			  \qedhere
+		  \end{displaymath}
+	  \end{proof}
+  	  \end{lstlisting}
     \end{itemize}
-  \item 定义环境中的“定义主体”要用斜体表示：例如 \lstinline|function| 定义需要使用 \lstinline|\emph{function}|。
-  \begin{definition}
-    \label{def:function}
-    \textnormal{A \emph{function} is a mapping from a set $X$ to a set $Y$.}
-  \end{definition}
-
-  % \item 定义、定理、引理、推论环境的选择要合理：数学讲义中环境的选择体现了整个讲义的逻辑，能够帮助读者理清讲义的脉络，在选择环境时思考其与上下文的关系。
-  \item 数学公式标点格式要规范：
-    \begin{itemize}
-      \item 行间数学公式作为描述语句的一部分，则需要加逗号：例如，若数列 $a_n$ 满足
-      \begin{equation}
-        \label{eq:punctation1}
-        \forall \epsilon > 0, \exists N \in \mathbb{N} \text{ s.t. } \forall n \geq N, |a_n - A| < \epsilon,
-      \end{equation}
-        则称 $a_n$ 的极限为 $A$。这里的行间公式结尾有一个逗号，说明其是描述语句的一部分。
-      \item 多行数学公式作为结尾，则前几行加逗号，最后一行加句号：例如
-      \begin{align}
-        \label{eq:punctation2}
-        f_1(x) = 1, \\
-        f_2(x) = x.
-      \end{align}
-    \item 当数学公式作为证明环境结尾时，将证明环境结尾的方框插入公式中：例如
-    \begin{proof}
-      \begin{displaymath}
-        \begin{bmatrix}
-          \alpha & -\beta
-          \\
-          \beta & \alpha
-        \end{bmatrix}^{-1}
-        =
-        \frac{1}{\alpha^2+\beta^2}
-        \begin{bmatrix}
-          \alpha & \beta
-          \\
-          -\beta & \alpha
-        \end{bmatrix}.
-        \qedhere
-      \end{displaymath}
-    \end{proof}
-    从源代码角度即在结尾处增加 \lstinline|\qedhere|。
-
-    \begin{lstlisting}
-    \begin{proof}
-      \begin{displaymath}
-        ...
-        \qedhere
-      \end{displaymath}
-    \end{proof}
-    \end{lstlisting}
-
+    \item 为每个定理环境、数学公式提供标签。
+    在 \lstinline|theorem|、\lstinline|equation| 等
+    环境中加上 \lstinline|\label{...}|，
+    在后续引用时就可以直接使用 \lstinline|\ref{...}|，
+    体现了数学知识相互的联系与复用。
   \end{itemize}
-  \item 为每个定理环境、数学公式提供标签：即在每个 \lstinline|theorem|、\lstinline|equation| 
-  环境中加上 \lstinline|\label{...}|，
-  这样在后续引用时就可以直接使用 \lstinline|\ref{...}|。这样体现了数学知识相互的联系与复用。
-  \item 如果有需要在数学文档中插入图片，无论是何种格式的图，
-  插入的图片大小都需要严丝合缝，\textbf{不能}出现外围的白边。
+  \item 英文语法
+  \begin{itemize}
+  	\item 用语选择数学文章中常用的表达。
+  	例如下面两个语句都没有语法错误，但是后者更加符合数学文章的表达习惯。
+  	这就需要多阅读文章进行积累，或者在写讲义时多参考别人写的文章。
+  	\begin{lstlisting}
+  	M(z) can be decomposed into ...
+  	M(z) can be considered as the composition of ...
+  	\end{lstlisting}
+  	\item 句式的简洁性。
+  	读者对冗长复杂的证明是提不起兴趣的，我们写文章时需要采用一些简洁的句式，
+  	力求在不影响基本证明的前提下，尽量写出一个干净漂亮的证明。下面是几个例子。
+  	\begin{itemize}
+  		\item 想表达“使用A可以推出B时”，可以表述为： 
+  		A yields/implies B. 或 B follows from A. 
+  		（尽量避免繁琐的表达：By using A, we have B.）
+  		\item 想表达“第二个命题的证明方法与第一个类似”，可以如下表述.\\
+  		当写在证明开头时：WLOG, we only prove the first statement.\\
+  		当写在证明结尾时：The second statement can be shown similarly.
+  		\item 想表达“证明采用反证法”，可以表述为：We prove the statement by contradiction.
+  	\end{itemize}
+  	\item 强调重点。在写英文句子的时候，一般句子的重心总是在句子结尾的地方。
+  	因此在写证明的时候，需要让所证明的重点尽量显现在句子的结尾处。
+  	例：Since A, we have B by Theorem 1. 
+  	如果想强调B是重点，则可以改为 Since A, Theorem 1 implies B.
+  	\item 关于不及物动词。例：converge 是不及物动词，后跟名词的时候要加to（converge to $L$）。
+  	在一些情形下也可以用等价描述the convergence of $(a_n)$ to $L$。
+  	\item 关于冠词a/the。注意上下文环境下名词前面是否要加冠词，
+  	例：Let $(a_n)$ be \textbf{a} sequence …; \textbf{The} triangle inequality implies …。
+  	其次，注意a和the的区别：前者是泛指，后者是特指。
+  	\item 关于固定句式。注意在写数学证明中的一些固定句式，
+  	例：Suppose后面的句子一定跟then：Suppose A. Then B.
+  	\item 拼写检查。通读写好的文章，找出笔误并及时改正。
+  \end{itemize}
+  \item 排版架构
+  \begin{itemize}
+  	\item 标题格式要统一。
+  	\begin{itemize}
+  		\item 文档名、章节标题所有实词首字母大写，
+  		例如 \lstinline|Notes on Complex Analysis|。
+  		\item 二级标题、三级标题的首字母大写，
+  		例如 \lstinline|A story of motivations|。
+  	\end{itemize}
+
+  	\item 章节内容的组织要符合数学脉络和读者思路。
+  	\begin{itemize}
+  		\item 每章、每节的标题名要准确概括章节的核心思想，尽量用具体的词语而非宽泛的词语。
+  		例如想阐述 Mobius 变换保持角的性质时，
+  		使用 \lstinline|Preservation of angles| 比 \lstinline|The basic properties| 
+  		更为精确。
+  		\item 讲义内容要完善、有条理。讲义的内容要完善、自成体系，切忌前言不搭后语，
+  		以及跳跃性太大，尽量将相似的内容放在一起，便于读者理解。
+  		例如在引入 Mobius 变换定义时，可以同时引入 singular Mobius 变换、 
+  		normalized Mobius 变换的概念，
+  		而非一节引入一个概念，这样有利于读者理清多个概念之间的关系。
+  		\item 最大限度利用前面写过的东西。
+  		文章的脉络结构是清晰的，
+  		所以在后面证明一些结论时可能用到了前面提及的一些定义、引理、定理等，
+  		这个时候我们在证明里把它提出来，使得我们在此题的证明逻辑更加清晰严密。
+  	\end{itemize}
+  	\item 文章整体排版。文章写出来后，观察文字是否最大化利用了一整页纸。
+  	如果发现哪一处的空档很大，或者哪一个数学语句超出了版面，都应当及时地进行修正。
+  	\item 多行数学公式的排版。当有多行数学公式时，一般会采用对齐符。
+  	在何处对齐是有讲究的，一般在连等式（或放缩式）中对齐等号（不等号），
+  	在一系列逻辑语句中对齐推出/等价符号。
+  	\item 当一句话中既有英文叙述又有数学公式时：
+  	\begin{itemize}
+  		\item 当数学公式很短，且可以用英文简单表达时，无需使用数学公式。\\
+  		例：Suppose that $\#A<\infty$. 可以改为 Suppose that A is finite. 
+  		\item 当行内数学公式超出该行末尾而接到下一行时，导致公式错开，不好阅读。
+  		应当直接在新的一行中采用行间数学公式。
+  		\item 当数学公式为行间数学公式时，务必保持它为一个完整的逻辑命题，
+  		即不要在行内写前半句公式，行间写后半句公式，避免割裂感。
+  	\end{itemize}
+    \item 如果有需要在数学文档中插入图片，无论是何种格式的图，
+    插入的图片大小都需要严丝合缝，\textbf{不能}出现外围的白边。
+  \end{itemize}
 \end{itemize}
 
 \subsection{参考文献的规范}
-我们在写英文数学讲义或是数学论文时，总是需要引用前人的成果，此时就需要我们写一份规范的\texttt{.bib}文件。
-由于参考文献格式比较重要，且\texttt{.bib}文件的格式和\texttt{.tex}略有区别，我们另起一节来介绍参考文献的格式规范。
+我们在写英文数学讲义或是数学论文时，总是需要引用前人的成果，
+此时就需要我们写一份规范的\texttt{.bib}文件。
+由于参考文献格式比较重要，且\texttt{.bib}文件的格式和\texttt{.tex}略有区别，
+我们另起一节来介绍参考文献的格式规范。
 \begin{itemize}
   \item \texttt{.bib}文件的编译:要正常生成参考文献，除了有\texttt{bibtex}源代码外，
   还需要正确的编译过程。只用\texttt{xelatex}编译一遍是无法生成参考文献的。
@@ -139,4 +221,5 @@
   \item 引用著作包含的信息至少需要有title, author, year和publisher。
   \item 引用论文包含的信息至少需要有title, author, journal, pages, year和publisher。
 \end{itemize}
+
 
