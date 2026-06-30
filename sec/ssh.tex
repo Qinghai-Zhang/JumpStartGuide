@@ -1,0 +1,19 @@
+\begin{enumerate}[1.]
+	\item 首先生成本地机器的密钥:
+	      在.ssh文件中输入以下命令:
+	      \begin{lstlisting}[language=bash]
+ssh -keygen -t rsa
+\end{lstlisting}
+	\item 然后将公钥上传到远程服务器:
+	      在.ssh文件中输入以下命令:
+	      \begin{lstlisting}[language=bash]
+ssh-copy-id user@remote_host
+\end{lstlisting}
+	      其中user是远程服务器的账户名, remote\_host是远程服务器的IP地址或域名。
+	\item 最后测试是否可以无密码登录:
+	      在终端中输入以下命令:
+	      \begin{lstlisting}[language=bash]
+ssh user@remote_host
+\end{lstlisting}
+\end{enumerate}
+
